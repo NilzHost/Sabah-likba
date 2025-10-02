@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembalik Kata Ultimate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Audiowide&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Audiowide', cursive;
+      background: linear-gradient(135deg, #0f0f1a, #1a1a2e, #16213e);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 42px;
+      color: #00fff7;
+      margin-top: 30px;
+      text-shadow: 0 0 15px #00fff7, 0 0 30px #00bcd4;
+      animation: glow 2s infinite alternate;
+    }
+
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 22px;
+      margin-top: 10px;
+      color: #ffea00;
+      text-shadow: 0 0 15px #ffea00, 0 0 30px #ffcc00;
+      animation: flicker 3s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00fff7; }
+      to { text-shadow: 0 0 30px #00e0ff, 0 0 50px #00bcd4; }
+    }
+    @keyframes flicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+
+    input {
+      padding: 14px;
+      font-size: 18px;
+      border-radius: 12px;
+      border: 2px solid #00fff7;
+      background: rgba(15, 15, 26, 0.8);
+      color: #fff;
+      width: 320px;
+      margin-top: 20px;
+      text-align: center;
+      outline: none;
+      box-shadow: 0 0 15px #00fff7;
+      transition: 0.3s;
+    }
+    input:focus {
+      border-color: #ffea00;
+      box-shadow: 0 0 20px #ffea00;
+    }
+
+    button {
+      margin-top: 18px;
+      padding: 14px 30px;
+      font-size: 18px;
+      background: linear-gradient(45deg, #00fff7, #00bcd4);
+      color: #0f0f1a;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 20px #00fff7;
+    }
+    button:hover {
+      background: linear-gradient(45deg, #ffea00, #ffaa00);
+      box-shadow: 0 0 25px #ffea00;
+      transform: scale(1.1);
+    }
+
+    .notif {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px 35px;
+      border-radius: 15px;
+      font-size: 20px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: bold;
+      box-shadow: 0 0 25px #000;
+      animation: fadeInOut 3s forwards;
+      z-index: 1000;
+      text-align: center;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translate(-50%, -60%); }
+      10% { opacity: 1; transform: translate(-50%, -50%); }
+      90% { opacity: 1; transform: translate(-50%, -50%); }
+      100% { opacity: 0; transform: translate(-50%, -40%); }
+    }
+    .notif.success { background: #00e676; color: #000; }
+    .notif.error { background: #ff1744; color: #fff; }
+    .notif.warn { background: #ffea00; color: #000; }
+
+    table {
+      margin-top: 30px;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 750px;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 20px #00fff7;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    th {
+      background: #00fff7;
+      color: #0f0f1a;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    tr:hover { background: rgba(0, 255, 247, 0.15); }
+
+    footer {
+      margin-top: 40px;
+      font-size: 15px;
+      line-height: 1.6;
+      font-family: 'Orbitron', sans-serif;
+    }
+    footer p {
+      margin: 5px 0;
+      text-shadow: 0 0 10px #00fff7;
+    }
+    footer .sponsor {
+      color: #ffea00;
+      text-shadow: 0 0 10px #ffea00;
+    }
+
+    /* Tambahan gambar */
+    .gambar-bawah {
+      width: 100%;
+      height: 50vh;
+      object-fit: cover;
+      margin-top: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px #00fff7;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔥 Bahasa Balik Keren 🔥</h1>
+  <h2>WELCOME TO SABAH LIKBA BAY DANIL GANTENG</h2>
+
+  <input type="text" id="inputText" placeholder="Masukkan kata/kalimat...">
+  <button onclick="balikKata()">Balikkan</button>
+  
+  <table id="riwayat">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Asli</th>
+        <th>Balik</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <footer>
+    <p>© ByDanilSiGanteng</p>
+    <p class="sponsor">Sponsor: AnakNyaAndre | AnakNyaYadi</p>
+  </footer>
+
+  <!-- Foto setengah layar -->
+  <img class="gambar-bawah" src="https://files.catbox.moe/xubzkm.jpg" alt="Foto Keren">
+
+  <script>
+    const bannedWords = ["butet","anis","wati","batak","medan","pirma","pirman","pirmatua","opung"];
+    let counter = 1; 
+    
+    function showNotif(msg, type) {
+      let notif = document.createElement("div");
+      notif.className = `notif ${type}`;
+      notif.innerText = msg;
+      document.body.appendChild(notif);
+      setTimeout(() => {
+        notif.remove();
+      }, 3000);
+    }
+
+    function balikKata() {
+      let text = document.getElementById("inputText").value.trim();
+
+      if (text.length <= 1) {
+        showNotif("Taiii!! Pala Lu Sini Gw Balik. Balik Si 1 Huruf Doang Bego Kali Lu", "warn");
+        return;
+      }
+
+      if (/\d/.test(text) || /[^a-zA-Z\s]/.test(text)) {
+        showNotif("🚫 DILARANG PAKE ANGKA / SIMBOL BANG!", "error");
+        return;
+      }
+
+      if (bannedWords.some(word => text.toLowerCase().includes(word))) {
+        showNotif("YEUUU BATU YE LU TOLOL. GA LUCU!", "error");
+        return;
+      }
+
+      let hasil = text.split("").reverse().join("");
+      showNotif("✅ BERHASIL MEMBALIKKAN KATA!", "success");
+
+      let tbody = document.querySelector("#riwayat tbody");
+      let row = document.createElement("tr");
+      row.innerHTML = `<td>${counter}</td><td>${text}</td><td>${hasil}</td>`;
+      tbody.appendChild(row);
+      counter++; 
+    }
+  </script>
+</body>
+</html>
